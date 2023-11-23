@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helados-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: helados
+  template:
+    metadata:
+      labels:
+        app: helados
+    spec:
+      containers:
+      - name: helados-api
+        image: idoware808/practica3:api
+        ports:
+        - containerPort: 3000
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: helados-app-service
+spec:
+  selector:
+    app: helados
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
